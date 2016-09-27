@@ -16,7 +16,10 @@ public class ApplicationManager {
   private GroupHelper groupHelper;
 
   public void init() {
-    System.setProperty("webdriver.gecko.driver", "C:\\Geckodriver\\geckodriver.exe");
+    System.setProperty("webdriver.gecko.driver", "/Users/EvgeniKutsenko/IdeaProjects/java_pft/addressbook-web-tests/geckodriver");
+ //   DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+ //   capabilities.setCapability("marionette", true);
+ //   WebDriver driver = new FirefoxDriver(capabilities);
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
