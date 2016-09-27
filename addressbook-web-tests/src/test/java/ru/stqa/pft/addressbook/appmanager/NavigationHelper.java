@@ -28,6 +28,10 @@ public class NavigationHelper extends HelperBase{
     wd.findElement(By.name("MainForm")).click();
   }
 
+  public void returnToHomePage() {
+    wd.findElement(By.linkText("home")).click();
+  }
+
   public void submitAddNewCreation() {
     wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
   }
@@ -44,5 +48,8 @@ public class NavigationHelper extends HelperBase{
     wd.findElement(By.name("email")).clear();
     wd.findElement(By.name("email")).sendKeys(addNewData.getEmail());
   }
+
+
+
 
 }
