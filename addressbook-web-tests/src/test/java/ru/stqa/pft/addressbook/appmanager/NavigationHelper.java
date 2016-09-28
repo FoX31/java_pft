@@ -28,9 +28,7 @@ public class NavigationHelper extends HelperBase{
     wd.findElement(By.name("MainForm")).click();
   }
 
-  public void returnToHomePage() {
-    wd.findElement(By.linkText("home")).click();
-  }
+  public void returnToHomePage() {wd.findElement(By.linkText("home")).click();}
 
   public void submitAddNewCreation() {
     wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();

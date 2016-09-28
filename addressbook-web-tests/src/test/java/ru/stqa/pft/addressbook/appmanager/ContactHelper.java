@@ -12,15 +12,17 @@ public class ContactHelper extends HelperBase{
         super(wd);
     }
 
-    public void deleteSelectedContact() {
-        wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
-    }
+    public void deleteSelectedContact() {wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();}
 
-    public void selectContact() {
-        wd.findElement(By.name("selected[]")).click();
-    }
+    public void selectContact() {wd.findElement(By.name("selected[]")).click();}
 
     public void acceptAllert(){
         wd.switchTo().alert().accept();
     }
+
+    public void addSelectContact() { wd.findElement(By.name("add")).click();}
+
+    public void returnToAddContact() { wd.findElement(By.linkText("group page \"Fox\"")).click();}
+
+
 }

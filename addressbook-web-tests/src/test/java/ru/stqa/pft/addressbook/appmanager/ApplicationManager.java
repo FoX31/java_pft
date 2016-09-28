@@ -17,8 +17,8 @@ public class ApplicationManager {
   private ContactHelper contactHelper;
 
   public void init() {
-    //  System.setProperty("webdriver.gecko.driver", "C:\\\\Geckodriver\\\\geckodriver.exe");
-    System.setProperty("webdriver.gecko.driver", "/Users/EvgeniKutsenko/IdeaProjects/java_pft/addressbook-web-tests/geckodriver");
+      System.setProperty("webdriver.gecko.driver", "C:\\\\Geckodriver\\\\geckodriver.exe");
+    //System.setProperty("webdriver.gecko.driver", "/Users/EvgeniKutsenko/IdeaProjects/java_pft/addressbook-web-tests/geckodriver");
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
