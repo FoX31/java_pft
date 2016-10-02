@@ -26,16 +26,13 @@ public class ApplicationManager {
   }
 
   public void init() {
-      System.setProperty("webdriver.gecko.driver", "C:\\\\Geckodriver\\\\geckodriver.exe");
-    //System.setProperty("webdriver.gecko.driver", "/Users/EvgeniKutsenko/IdeaProjects/java_pft/addressbook-web-tests/geckodriver");
     if (browser == BrowserType.FIREFOX) {
       wd = new FirefoxDriver();
     }else if (browser == BrowserType.CHROME) {
       wd = new ChromeDriver();
-    }else if (browser == BrowserType.IE) {
+    }else {
       wd = new InternetExplorerDriver();
     }
-    wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/group.php");
     groupHelper = new GroupHelper(wd);
