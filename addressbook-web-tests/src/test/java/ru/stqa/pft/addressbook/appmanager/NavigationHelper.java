@@ -2,8 +2,6 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import ru.stqa.pft.addressbook.model.AddNewData;
 
 /**
  * Created by e.kutsenko on 27.09.2016.
@@ -16,39 +14,22 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void gotoGroupPage() {
+    if (isElementPresent(By.tagName("h1"))
+            && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+            && isElementPresent(By.name("new"))){
+      return;
+    }
+
     click(By.linkText("groups"));
   }
 
-  public void gotoAddNewPage() {wd.findElement(By.linkText("add new")).click();}
+  public void gotoAddNewPage() {click(By.linkText("add new"));}
 
-  public void returnToLogoutPage() {
-    wd.findElement(By.linkText("Logout")).click();
+  public void returnToHomePage() {
+    if (isElementPresent(By.id("maintable"))) {
+      return;
+    }
+    click(By.linkText("home"));
   }
-
-  public void returnToMainFormPage() {
-    wd.findElement(By.name("MainForm")).click();
-  }
-
-  public void returnToHomePage() {wd.findElement(By.linkText("home")).click();}
-
-  public void submitAddNewCreation() {
-    wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
-  }
-
-
-  public void fillAddNewForm(AddNewData addNewData) {
-    wd.findElement(By.name("firstname")).click();
-    wd.findElement(By.name("firstname")).clear();
-    wd.findElement(By.name("firstname")).sendKeys(addNewData.getFirstname());
-    wd.findElement(By.name("lastname")).click();
-    wd.findElement(By.name("lastname")).clear();
-    wd.findElement(By.name("lastname")).sendKeys(addNewData.getLastname());
-    wd.findElement(By.name("email")).click();
-    wd.findElement(By.name("email")).clear();
-    wd.findElement(By.name("email")).sendKeys(addNewData.getEmail());
-  }
-
-
-
 
 }
