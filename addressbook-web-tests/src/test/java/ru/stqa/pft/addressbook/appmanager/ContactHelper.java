@@ -47,9 +47,23 @@ public class ContactHelper extends HelperBase{
         }
 
     }
+    public void gotoAddNewPage() {click(By.linkText("add new"));}
 
     public void submitAddNewCreation() {
         wd.findElement(By.name("submit")).click();
+    }
+
+    public void createContact(ContactData contact) {
+        gotoAddNewPage();
+        fillContactForm(contact, true);
+        submitAddNewCreation();
+        returnToHomePage();
+
+
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
 

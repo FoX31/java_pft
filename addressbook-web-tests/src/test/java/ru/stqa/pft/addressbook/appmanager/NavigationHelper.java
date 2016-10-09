@@ -23,13 +23,7 @@ public class NavigationHelper extends HelperBase{
     click(By.linkText("groups"));
   }
 
-  public void gotoAddNewPage() {click(By.linkText("add new"));}
 
-  public void returnToHomePage() {
-    if (isElementPresent(By.id("maintable"))) {
-      return;
-    }
-    click(By.linkText("home"));
-  }
+  public void returnToLogoutPage() {wd.findElement(By.linkText("Logout")).click();}
 
 }
