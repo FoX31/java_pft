@@ -6,7 +6,7 @@ package ru.stqa.pft.sandbox;
 public class Primes {
 
   public static boolean isPrime(int n) {
-    for (int = 2; i < n;  i++) {
+    for (int i = 2; i < n;  i++) {
       if (n % i == 0) {
         return false;
       }
@@ -16,7 +16,7 @@ public class Primes {
 
   public static boolean isPrimeFast(int n) {
     int m = (int) Math.sqrt(n);
-    for (int = 2; i < n / 2;  i++) {
+    for (int i = 2; i < n / 2;  i++) {
       if (n % i == 0) {
         return false;
       }

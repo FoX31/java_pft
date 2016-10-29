@@ -13,7 +13,7 @@ public class ContactAddTest extends TestBase{
   public void testAddTest() throws InterruptedException {
     app.getNavigationHelper().returnToHomePage();
     sleep(600);
-    app.getContactHelper().selectContact();
+    app.getContactHelper().selectContact(0);
     app.getContactHelper().addSelectContact();
     app.getContactHelper().returnToAddContact();
     app.getNavigationHelper().returnToLogoutPage();

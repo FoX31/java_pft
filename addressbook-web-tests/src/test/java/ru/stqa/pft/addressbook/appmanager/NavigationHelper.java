@@ -25,5 +25,4 @@ public class NavigationHelper extends HelperBase{
 
 
   public void returnToLogoutPage() {wd.findElement(By.linkText("Logout")).click();}
-
 }
