@@ -1,44 +1,50 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
-
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by e.kutsenko on 30.09.2016.
  */
 public class ContactModificationTest extends TestBase{
 
+  @BeforeMethod
+  public void ensurePrecondition() {
+    app.goTo().groupPage();
+    if   (app.group().all().size() == 0){
+      app.group().create(new GroupData().withName("Fox1").withFooter("Fox2").withHeader("Fox3"));
+    }
+    app.goTo().homePage();
+    if (app.contact().all().size() == 0){
+      app.contact().create(new ContactData().withFirstname("Evgeniy - " + (int)(Math.random() * 100 )).withLastname("Kutsenko - " + (int)(Math.random() * 100))
+              .withEmail("h-ebreh@mail.ru").withGroup("Fox1").withBirthdayDay("5"));
+    }
+  }
+
   @Test
   public void testContactModification() {
-    app.getNavigationHelper().returnToHomePage();
-    if   (! app.getGroupHelper().isThereAGroup()){
-      app.getGroupHelper().createGroup(new GroupData("Fox1", "Fox2", "Fox3"));
-    }
-    app.getNavigationHelper().returnToHomePage();
-    if (! app.getContactHelper().isThereAContact()){
-      app.getContactHelper().createContact(new ContactData("Evgeniy", "Kutsenko", "h-ebreh@mail.ru", null,"5", "Fox1"));
-    }
-    app.getNavigationHelper().returnToHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().modificationSelectedContact(before.size() - 1);
-    ContactData contact = new ContactData(before.get(before.size() - 1).getId(), "Evgeniy", "Evgeniy", null, "1990", "8", null);
-    app.getContactHelper().fillContactForm (contact , false);
-    app.getContactHelper().updateSelectedContact();
-    app.getNavigationHelper().returnToHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(before.size(), after.size());
+    app.goTo().homePage();
+    Contacts before = app.contact().all();
+    ContactData modifiedContact = before.iterator().next();
+    ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstname("Evgeniy").withLastname("Evgeniy").withBirthdayYear("1990")
+            .withEmail("h-ebreh@mail.ru").withBirthdayDay("8");
+    app.contact().modify(contact);
+    Contacts after = app.contact().all();
+    assertEquals(before.size(), after.size());
 
-    before.remove(before.size() - 1);
-    before.add(contact);
-    Comparator<? super ContactData> byId = (o1, o2) -> Integer.compare(o1.getId(), o2.getId());
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 }

@@ -4,57 +4,19 @@ package ru.stqa.pft.addressbook.model;
  * Created by EvgeniKutsenko on 02.10.16.
  */
 public class ContactData {
-    private int id;
-    private final String firstname;
-    private final String lastname;
-    private final String email;
-    private final String birthdayYear;
-    private final String birthdayDay;
-    private final String group;
+    private int id = Integer.MAX_VALUE;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String birthdayYear;
+    private String birthdayDay;
+    private String group;
 
 
-
-    public ContactData(int id, String firstname, String lastname, String email, String birthdayYear, String birthdayDay, String group){
-        this.id = id;
-        this.birthdayYear = birthdayYear;
-        this.birthdayDay = birthdayDay;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.group = group;
+    public String getBirthdayYear () {
+        return birthdayYear;
 
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = firstname != null ? firstname.hashCode() : 0;
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
-    }
-
-    public ContactData(String firstname, String lastname, String email, String birthdayYear, String birthdayDay, String group) {
-        this.id = Integer.MAX_VALUE;
-        this.birthdayYear = birthdayYear;
-        this.birthdayDay = birthdayDay;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.group = group;
-    }
-
-    public String getBirthdayYear () {return birthdayYear;}
 
     public String getBirthdayDay () {return birthdayDay;}
 
@@ -81,8 +43,63 @@ public class ContactData {
                 '}';
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
     }
+
+
+    public ContactData withFirstname(String firstname) {
+        this.firstname = firstname;
+        return this;
+    }
+
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withBirthdayYear(String birthdayYear) {
+        this.birthdayYear = birthdayYear;
+        return this;
+    }
+
+    public ContactData withBirthdayDay(String birthdayDay) {
+        this.birthdayDay = birthdayDay;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        return result;
+    }
+
+
 }
 

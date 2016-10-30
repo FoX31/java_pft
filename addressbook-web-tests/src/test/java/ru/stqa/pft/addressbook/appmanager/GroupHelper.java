@@ -4,9 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by e.kutsenko on 26.09.2016.
@@ -52,30 +55,43 @@ public class GroupHelper extends HelperBase {
   }
 
 
-  public void createGroup(GroupData group) {
+  public void create(GroupData group) {
     initGroupCreation();
     filGroupForm(group);
     submitGroupCreation();
     returnToGroupPage();
   }
-
-  public boolean isThereAGroup() {
-    return isElementPresent(By.name("selected[]"));
+  public Groups all() {
+      Groups groups = new Groups();
+      List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
+      for (WebElement element : elements)   {
+          String name = element.getText();
+          int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+          GroupData group = new GroupData().withId(id).withName(name);
+          groups.add(group);
+      }
+      return groups;
   }
 
-  public int getGroupCount() {
-    return wd.findElements(By.name("selected[]")).size();
+  public void modify(GroupData group) {
+    selectGroupById(group.getId());
+    initGroupModification();
+    filGroupForm(group);
+    submitGroupModification();
+    returnToGroupPage();
   }
-
-  public List<GroupData> getGroupList() {
-    List<GroupData> groups = new ArrayList<>();
-    List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-    for (WebElement element : elements)   {
-        String name = element.getText();
-        int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-        GroupData group = new GroupData(id, name, null, null);
-        groups.add(group);
-    }
-    return groups;
+  public void delete(GroupData group) {
+    selectGroupById(group.getId());
+    deleteSelectedGroups();
+    returnToGroupPage();
+  }
+  public void selectGroupById(int id) {
+    wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
+  }
+  public boolean isThereAGroup(){
+      return isElementPresent(By.name("selected[]"));
+  }
+  public int getGroupCont(){
+      return wd.findElements(By.name("selected[]")).size();
   }
 }

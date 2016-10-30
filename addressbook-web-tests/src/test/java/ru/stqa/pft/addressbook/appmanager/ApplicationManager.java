@@ -6,7 +6,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
-
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,12 +35,12 @@ public class ApplicationManager {
     }else {
         wd = new SafariDriver();
     }
-    wd.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+    wd.manage().timeouts().implicitlyWait(300, TimeUnit.MILLISECONDS);
     wd.get("http://localhost/addressbook");
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
-      contactHelper = new ContactHelper(wd);
+    contactHelper = new ContactHelper(wd);
     sessionHelper.login("admin", "secret");
 
   }
@@ -51,15 +50,13 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public GroupHelper getGroupHelper() {
-    return groupHelper;
-  }
+  public GroupHelper group() {return groupHelper; }
 
-  public NavigationHelper getNavigationHelper() {
+  public NavigationHelper goTo() {
     return navigationHelper;
   }
 
-  public ContactHelper getContactHelper() {
+  public ContactHelper contact() {
         return contactHelper;
     }
 }

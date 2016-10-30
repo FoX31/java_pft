@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Created by e.kutsenko on 27.09.2016.
@@ -37,17 +36,6 @@ public class HelperBase {
     wd.findElement(locator).isSelected();
   }
 
-  public boolean isAlertPresent() {
-    try {
-      wd.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
-    }
-
-  }
-
-
   protected boolean isElementPresent(By locator) {
       try {
           wd.findElement(locator);
@@ -57,7 +45,7 @@ public class HelperBase {
       }
   }
 
-  public void returnToHomePage() {
+  public void homePage() {
     if (isElementPresent(By.id("maintable"))) {
       return;
     }
