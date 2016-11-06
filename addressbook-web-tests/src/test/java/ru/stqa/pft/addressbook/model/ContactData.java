@@ -19,6 +19,7 @@ public class ContactData {
     private String allPhones;
     private String allEmails;
     private String address;
+    private String fio;
 
     public String getAllPhones() {
         return allPhones;
@@ -60,6 +61,15 @@ public class ContactData {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public ContactData withFio(String fio) {
+        this.fio = fio;
+        return this;
     }
 
     public ContactData withAddress(String address) {

@@ -54,6 +54,20 @@ public class ContactDataTest extends TestBase{
 
     }
 
+    @Test
+    public void testDetailedForm() {
+        app.goTo().homePage();
+        ContactData contact = app.contact().all().iterator().next();
+        ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+        app.goTo().homePage();
+        ContactData contactInfoFromDetailedForm = app.contact().infoFromDetailedForm(contact);
+        assertThat(contactInfoFromDetailedForm.getFio(), equalTo(mergeFio(contactInfoFromEditForm)));
+        assertThat(contactInfoFromDetailedForm.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
+        assertThat(contactInfoFromDetailedForm.getHome(), equalTo(contactInfoFromEditForm.getHome()));
+        assertThat(contactInfoFromDetailedForm.getMobile(), equalTo(contactInfoFromEditForm.getMobile()));
+        assertThat(contactInfoFromDetailedForm.getWork(), equalTo(contactInfoFromEditForm.getWork()));
+    }
+
     private String merge(ContactData contact) {
         return Arrays.asList(contact.getHome(), contact.getMobile(), contact.getWork())
                 .stream().filter((s) -> ! s.equals(""))
@@ -66,6 +80,13 @@ public class ContactDataTest extends TestBase{
                 .stream().filter((s) -> ! s.equals(""))
                // .map(ContactDataTest::cleaned)
                 .collect(Collectors.joining("\n")) + "\n";
+    }
+
+    private String mergeFio(ContactData contact) {
+        return Arrays.asList(contact.getFirstname(), contact.getLastname())
+                .stream().filter((s) -> ! s.equals(""))
+                // .map(ContactDataTest::cleaned)
+                .collect(Collectors.joining(" ")).trim();
     }
 
     public static String cleaned(String phone){
