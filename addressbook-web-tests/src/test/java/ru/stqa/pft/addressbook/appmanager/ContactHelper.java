@@ -49,9 +49,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("email"), contactData.getEmail());
         type(By.name("byear"), contactData.getBirthdayYear());
-        new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthdayDay());
+        if (contactData.getBirthdayDay() != null){
+            new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthdayDay());
+        }
+
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroup() != null){
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
