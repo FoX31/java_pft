@@ -48,6 +48,9 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("email"), contactData.getEmail());
+        type(By.name("home"), contactData.getHome());
+        type(By.name("mobile"), contactData.getMobile());
+        type(By.name("work"), contactData.getWork());
         type(By.name("byear"), contactData.getBirthdayYear());
         if (contactData.getBirthdayDay() != null){
             new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBirthdayDay());
