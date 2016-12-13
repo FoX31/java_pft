@@ -3,7 +3,9 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
 /**
@@ -11,27 +13,70 @@ import java.io.File;
  */
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+    @Expose
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
+
     @Expose
+    @Column(name = "firstname")
     private String firstname;
+
     @Expose
+    @Column(name = "lastname")
     private String lastname;
+
+    @Transient
     private String email;
+
+    @Transient
     private String email2;
+
+    @Transient
     private String email3;
+
+    @Transient
     private String birthdayYear;
+
+    @Transient
     private String birthdayDay;
+
+    @Transient
     private String group;
+
+    @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobile;
+
+    @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String home;
+
+    @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String work;
+
+    @Transient
     private String allPhones;
+
+    @Transient
     private String allEmails;
+
+    @Transient
     private String address;
+
+    @Transient
     private String fio;
-    private File photo;
+
+    @Transient
+    private String photo;
 
     public String getAllPhones() {
         return allPhones;
@@ -109,11 +154,14 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        if (photo != null){
+            return new File(photo);
+        }
+        return null;
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -128,9 +176,12 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", home='" + home + '\'' +
+                ", work='" + work + '\'' +
                 '}';
     }
 
@@ -170,27 +221,6 @@ public class ContactData {
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
-    }
-
 
     public ContactData withMobilePhone(String mobile) {
         this.mobile = mobile;
@@ -218,6 +248,33 @@ public class ContactData {
     public ContactData withWorkPhone(String work) {
         this.work = work;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
+        if (home != null ? !home.equals(that.home) : that.home != null) return false;
+        return work != null ? work.equals(that.work) : that.work == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (home != null ? home.hashCode() : 0);
+        result = 31 * result + (work != null ? work.hashCode() : 0);
+        return result;
     }
 }
 
