@@ -38,8 +38,6 @@ public class ContactModificationTest extends TestBase {
         app.contact().modify(contact);
         assertEquals(before.size(), app.contact().count());
         Contacts after = app.db().contacts();
-
-
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 }
