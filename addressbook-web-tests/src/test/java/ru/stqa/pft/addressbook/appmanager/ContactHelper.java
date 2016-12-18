@@ -7,24 +7,29 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by EvgeniKutsenko on 28.09.16.
  */
 public class ContactHelper extends HelperBase {
 
+
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
+
 
     public void deleteSelectedContact() {
         wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContact(int id) {
+        wd.findElement(By.xpath("//*[@id=\"" + id + "\"]")).click();
     }
 
     public void acceptAllert() {
@@ -57,9 +62,10 @@ public class ContactHelper extends HelperBase {
         }
 
         if (creation) {
-            if (contactData.getGroup() != null){
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-            }
+  //          if (contactData.getGroups().size() > 0 ){
+  //              Assert.assertTrue(ContactData.getGroups().size() == 1);
+  //              new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+  //          }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -161,6 +167,18 @@ public class ContactHelper extends HelperBase {
         return new ContactData().withFio(fio).withAddress(address).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
     }
 
+    public void addContactGroup(ContactData contact, String groupName) throws InterruptedException {
+        selectContact(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+        wd.findElement(By.name("add")).click();
 
+    }
+
+    public void removeContactGroup(ContactData contact, GroupData group) {
+        String groupName = group.getName();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+        selectContact(contact.getId());
+        wd.findElement(By.name("remove")).click();
+    }
 }
 

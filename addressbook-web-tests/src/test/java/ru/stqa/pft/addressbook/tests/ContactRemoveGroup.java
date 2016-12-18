@@ -5,15 +5,16 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 /**
- * Created by e.kutsenko on 30.09.2016.
+ * Created by EvgeniKutsenko on 18.12.16.
  */
-public class ContactModificationTest extends TestBase {
+public class ContactRemoveGroup extends TestBase {
+
 
     @BeforeMethod
     public void ensurePrecondition() {
@@ -29,17 +30,20 @@ public class ContactModificationTest extends TestBase {
     }
 
     @Test
-    public void testContactModification() {
+    public void testContactRemoveGroup() throws InterruptedException {
         app.goTo().homePage();
         Contacts before = app.db().contacts();
-        ContactData modifiedContact = before.iterator().next();
-        ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstname("Evgeniy").withLastname("Evgeniy").withBirthdayYear("1990")
-                .withEmail("h-ebreh@mail.ru").withBirthdayDay("8").withHomePhone("1").withMobilePhone("2").withWorkPhone("3") ;
-        app.contact().modify(contact);
-        assertEquals(before.size(), app.contact().count());
+        ContactData contact = before.iterator().next();
+        if (contact.getGroups().size() == 0){
+            GroupData group = app.db().groups().iterator().next();
+            app.contact().addContactGroup(contact, group.getName());
+        }
+        GroupData group = contact.getGroups().iterator().next();
+        app.contact().removeContactGroup(contact, group);
         Contacts after = app.db().contacts();
-        assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
-        verifyContactListInUI();
+        Groups contactGroupsBefore = before.getContactById(contact.getId()).getGroups();
+        Groups contactGroupsAfter = after.getContactById(contact.getId()).getGroups();
+        assertThat(contactGroupsAfter, equalTo(contactGroupsBefore.without(group)));
     }
 
 

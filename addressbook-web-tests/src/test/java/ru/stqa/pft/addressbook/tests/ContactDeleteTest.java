@@ -26,7 +26,7 @@ public class ContactDeleteTest extends TestBase {
         app.goTo().homePage();
         if (app.db().contacts().size() == 0) {
             app.contact().create(new ContactData().withFirstname("Evgeniy - " + (int) (Math.random() * 100)).withLastname("Kutsenko - " + (int) (Math.random() * 100))
-                    .withEmail("h-ebreh@mail.ru").withGroup("Fox1").withBirthdayDay("5"));
+                    .withEmail("h-ebreh@mail.ru").withBirthdayDay("5"));
         }
     }
 
